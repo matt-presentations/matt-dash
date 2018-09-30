@@ -9,6 +9,8 @@ jedi = "*"
 dash-html-components = "*"
 dash-core-components = "*"
 pandas-datareader = "*"
+ptpython = "*"
+mypy = "*"
 
 [dev-packages]
 
