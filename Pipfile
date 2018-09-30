@@ -11,6 +11,7 @@ dash-core-components = "*"
 pandas-datareader = "*"
 ptpython = "*"
 mypy = "*"
+sqlalchemy = "*"
 
 [dev-packages]
 
