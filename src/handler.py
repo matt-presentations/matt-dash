@@ -10,20 +10,22 @@ from datetime import datetime as dt
 class Handler(object):
     
     def __init__(self):
-        self.readers: typing.List[typing.Tuple[str, Reader]] = [] 
+        self.values: typing.List[typing.Tuple[str, int]] = [] 
+        self.readers: typing.List[Reader] = []
     
     def add_series(self, value: str, reader: Reader):
-        self.readers.append((value, reader))
+        self.values.append((value, len(self.readers)))
+        self.readers.append(reader)
 
     def run_app(self):
         app = dash.Dash()
-        default = self.readers[0][1]
+        default = self.values[0][1]
         app.layout = html.Div([
             html.H1('Stock Tickers'),
             dcc.Dropdown(
                 id='my-dropdown',
                 options=[
-                    {"label": k, "value": v} for k,v in self.readers
+                    {"label": k, "value": v} for k,v in self.values
                 ],
                 value=default
             ),
@@ -34,8 +36,8 @@ class Handler(object):
         def update_graph(selected_dropdown_value: Reader):
             return {
                 'data': [{
-                    'x': selected_dropdown_value.get_x(),
-                    'y': selected_dropdown_value.get_y()
+                    'x': self.readers[selected_dropdown_value].get_x(),
+                    'y': self.readers[selected_dropdown_value].get_y()
                 }]
             }
         
